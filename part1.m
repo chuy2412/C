@@ -1,36 +1,49 @@
 %C part 1
 clear
 
-n= 2500;
+n= 800;
 
 A = ([1 -1; 1 2]);
 
-% sigma = [1 16];
+%Variance for the sources
+Svar1 =1;
+Svar2 =4;
 
-var1 =1;
-var2 =4;
+%Variance for X signals
+Xvar1 = sqrt(17);
+Xvar2 = sqrt(65);
 
-A(1,:);
-A(2,:);
+%Generate the sources
+S1 = normrnd(0,Svar1,n,1);
+S2 = normrnd(0,Svar2,n,1);
 
- n1 = normrnd(0,var1,n,1);
- n2 = normrnd(0,var2,n,1);
-% % 
-%  hist(n1)
-%  pause
-%  hist(n2)
-%  pause
-% 
-X1 = double(zeros(n));
-X2 = double(zeros(n));
+%Generate the X signals
+X1 = normrnd(0,Xvar1,n,1);
+X2 = normrnd(0,Xvar2,n,1);
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Plots
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Plot Histogram of S1
+subplot(3,1,1)
+hist(S1)
+axis([-15 15 0 250])    %[xmin xmax ymin ymax]
+title('Histogram of S1')
+drawnow
 
-for i=1:n
-%      X1(i) = A(1,1) *(n1(i)) + A(1,2)*(n1(i));
-%      X2(i) = A(2,1) *(n2(i)) + A(2,2)*(n2(i));
+%Plot Histogram of S2
+subplot(3,1,2)
+hist(S2)
+axis([-15 15 0 250])    %[xmin xmax ymin ymax]
+title('Histogram of S2');
+drawnow
 
-   X1(i) = n1(i)*2;
-   X2(i) = n2(i)*2;
-end
+%Plot X1,X2
+subplot(3,1,3)
+plot(X1,X2,'x');
+title('Two-dimensional distribution of the signals X1 and X2');
+drawnow
 
- plot(X1,X2,'x');
+
+
 
