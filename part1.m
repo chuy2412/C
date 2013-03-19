@@ -14,7 +14,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear        %clear previous values
 
-eta = 0.2;   %Learning rate
+eta = 0.6;   %Learning rate
 n= 750;      %number of elements
 train = 160; %Number of training steps
 
@@ -70,7 +70,7 @@ pause(0.1);
 W_SOM = W_SOM(1,:);
 Y_SOM = W*X;
 
-%Compute the amplitud
+%Compute the amplitude
 Amplitude1_SOM = max(S(1,:)) / max(max(Y_SOM(1,:))); 
 Amplitude2_SOM = max(S(2,:)) / max(max(Y_SOM(2,:)));
 
@@ -78,7 +78,7 @@ Y_SOM(1,:) = Y_SOM(1,:) *Amplitude1_SOM;
 Y_SOM(2,:) = Y_SOM(2,:) *Amplitude2_SOM;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Compute Independant Component Analysis
+%Compute Independent Component Analysis
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [Y_ICA,W_ICA]  = ICA(X,W, n, train, eta);
 
@@ -93,14 +93,14 @@ Y_ICA(2,:) = Y_ICA(2,:) *Amplitude2_ICA;
 % %Plots the results
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 i =1:n;
-subplot(1,2,1)
+subplot(2,1,1)
 plot(i,Y_ICA(1,:),'.-',i,Y_SOM(1,:),'*-',i,S(1,:),'--')
-hleg1 = legend('Y_I_C_A_1','Y_S_O_M_1','S_2');
+hleg1 = legend('Y_I_C_A_1','Y_S_O_M_1','S_1');
 %title('S1 and Y_SOM1')
 drawnow
 
 %Plot of S2
-subplot(1,2,2)
+subplot(2,1,2)
 plot(i,Y_ICA(2,:),'*-',i,Y_SOM(2,:),'.-',i,S(2,:),'--')
 hleg1 = legend('Y_I_C_A_2','Y_S_O_M_2','S_2');
 %title('S2 and Y_SOM2');

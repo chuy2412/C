@@ -1,11 +1,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Self-Organizing Map
+%som.m
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Source:
-%http://home.wlu.edu/~levys/software/som/
+%Sources:
+%         http://home.wlu.edu/~levys/software/som/
+%         Supplemental notes from class
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [A,W]  = som(X, n, tmax, eta)
-% SOM Kohonen's two-dimensional Self-Organizing Map
+%     SOM Kohonen's two-dimensional Self-Organizing Map
 %     A  = SOM(X, N, TMAX) returns an N-by-N matrix A of output nodes 
 %     learned as an unsupervised map from input vectors X, using Kohonen's 
 %     Self-Oganizing Map algorithm.
@@ -18,6 +20,7 @@ function [A,W]  = som(X, n, tmax, eta)
 %Outputs:
 %      A - Matrix containing indices of X.
 %      W - Weights
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % learning parameters
 eta_F        = eta/5;          %eta: final
@@ -27,11 +30,9 @@ sigma_F     =  1.0e-1;      %                           : final
 
 
 % set up NxN grid
-%[u(:,1), u(:,2)] = ind2sub([n n], 1:n^2);
 [u(:,1), u(:,2)] = ind2sub([n n], 1:n);
 
 % create random initial weights
-%W = rand(n^2, size(X,2));
 W = rand(n, size(X,2));
 
 % run SOM learning for specified number of steps
@@ -55,7 +56,6 @@ for t = 1:tmax
     d = sqrt(sum(abs(xs-W).^2, 2));
     s = sum(d, 2);
     [ignore, winner] = min(s);
-    %y = W(i,:);
     
     
     % scale learning paramters by elapsed time                        

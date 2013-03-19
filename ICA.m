@@ -1,12 +1,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%ICA
+%Independent Component Analysis
+%ica.m
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Based on:
 %http://www.mathworks.com/matlabcentral/fileexchange/
 %6267-neural-networks-a-comprehensive-foundation-2e-book-companion-software/
 %content/haykin/ica.m
-%And Suplemental notes
+%And Supplemental notes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Inputs:
 %   X       - The observable vector of mixed signals (X = A*S)
@@ -25,7 +26,7 @@ for i=1:train
     %Demixing X with W
     y=W*X;
 
-    %Activation function
+    %Activation function 4 from the supplemental notes
     f=(3/4)*y.^11+(25/4)*y.^9+(-14/3)*y.^7+(-47/4)*y.^5+(29/4)*y.^3;
     I = eye(2);
     dW=(I-f*y')*W;
