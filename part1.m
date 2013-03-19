@@ -4,10 +4,12 @@
 clear
 
 eta = 0.1;
-n= 800;  %number of elements
+error=1e-2;
+iter=1;
+n= 10;  %number of elements
 
 %Initialize the weights with random values
-W = 0.1*rand(n);
+W = 0.1*rand(n,2);
 
 %Mixing matrix
 A = ([1 -1; 1 2]);
@@ -29,15 +31,15 @@ X = A*S;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Plot Histogram of S1
 subplot(3,1,1)
-plot(S(1,:))
-%axis([-15 15 0 250])    %[xmin xmax ymin ymax]
+hist(S(1,:))
+axis([-15 15 0 250])    %[xmin xmax ymin ymax]
 title('Histogram of S1')
 drawnow
 
 %Plot Histogram of S2
 subplot(3,1,2)
-plot(S(2,:))
-%axis([-15 15 0 250])    %[xmin xmax ymin ymax]
+hist(S(2,:))
+axis([-15 15 0 250])    %[xmin xmax ymin ymax]
 title('Histogram of S2');
 drawnow
 
@@ -59,14 +61,32 @@ I = double(zeros(n));
 % Py_Y = Px(X) / det(W);
 %While Py(y) <= [||]i_to_n Py_i(Py_i)
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Source:
+%http://www.mathworks.com/matlabcentral/fileexchange/
+%6267-neural-networks-a-comprehensive-foundation-2e-book-companion-software/
+%content/haykin/ica.m
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+for i=1:iter
 
-% Y_transpose = X' * W';
-% Y = Y_tranpose';
-% fy = Y^3;
-% 
-% %Missing value for I
-% deltaW = eta * (I - fy*Y_transpose)* W;
-% W = W + deltaW;
+ %Demixing X with W
+ y=W*X;
 
+ %Activation function
+ f=(3/4)*y.^11+(25/4)*y.^9+(-14/3)*y.^7+(-47/4)*y.^5+(29/4)*y.^3;
+
+ dW=(eye(n)-f*y')*W;
+
+ %Update the weight
+ W=W+ eta*dW;
+
+% Break if Algorithm diverges
+ if (sum(sum(isnan(W)))>0) flag=1; break; end
+   max(max(abs(dW)));
+
+% Break if Algorithm converges-- max weight update is less than error
+ if (max(max(abs(dW)))<error & i>10) break; end;
+
+end
 
 
